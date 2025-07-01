@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Gold & Silver Prices - Nepal</title>
+  <style>
+    :root {
+      --gold: #FFD700;
+      --gold-dark: #bfa100;
+      --silver: #C0C0C0;
+      --silver-dark: #888;
+      --bg: #f9f9f9;
+      --text: #222;
+      --card-bg: #fff;
+      --border: #e0e0e0;
+      --error: #ffcccc;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--silver) 100%);
+      padding: 2rem 1rem 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: 1px;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 2rem auto 1rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      padding: 1.5rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s;
+    }
+    .card.gold {
+      border-top: 5px solid var(--gold);
+    }
+    .card.silver {
+      border-top: 5px solid var(--silver);
+    }
+    .metal-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .metal-title.gold {
+      color: var(--gold-dark);
+    }
+    .metal-title.silver {
+      color: var(--silver-dark);
+    }
+    .unit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+    .unit-table th, .unit-table td {
+      padding: 0.5rem 0.3rem;
+      text-align: right;
+      font-size: 1.05rem;
+    }
+    .unit-table th {
+      background: #f6f6f6;
+      color: #444;
+      font-weight: 600;
+      text-align: left;
+    }
+    .unit-table td:first-child, .unit-table th:first-child {
+      text-align: left;
+    }
+    .unit-table tr:nth-child(even) {
+      background: #fafafa;
+    }
+    .unit-table tr:nth-child(odd) {
+      background: #fff;
+    }
+    .last-updated {
+      text-align: center;
+      margin-top: 2rem;
+      color: #888;
+      font-size: 1rem;
+    }
+    .error-message {
+      background: var(--error);
+      color: #a00;
+      border-radius: 0.5rem;
+      padding: 0.7rem 1rem;
+      margin: 1rem 0 0 0;
+      text-align: center;
+      font-size: 1rem;
+      max-width: 600px;
+    }
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 1.3rem;
+      }
+      .container {
+        max-width: 98vw;
+        gap: 1.2rem;
+      }
+      .card {
+        padding: 1rem 0.5rem;
+      }
+      .metal-title {
+        font-size: 1.1rem;
+      }
+      .unit-table th, .unit-table td {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Live Gold & Silver Prices - Nepal</h1>
+  </header>
+  <main class="container">
+    <section class="card gold">
+      <div class="metal-title gold">&#x1F947; Gold (XAU)</div>
+      <table class="unit-table" id="gold-table">
+        <thead>
+          <tr>
+            <th>Unit</th>
+            <th>USD</th>
+            <th>NPR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Tola</td><td id="gold-tola-usd">--</td><td id="gold-tola-npr">--</td></tr>
+          <tr><td>Troy Ounce</td><td id="gold-oz-usd">--</td><td id="gold-oz-npr">--</td></tr>
+          <tr><td>Gram</td><td id="gold-g-usd">--</td><td id="gold-g-npr">--</td></tr>
+          <tr><td>Kilogram</td><td id="gold-kg-usd">--</td><td id="gold-kg-npr">--</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="card silver">
+      <div class="metal-title silver">&#x1F948; Silver (XAG)</div>
+      <table class="unit-table" id="silver-table">
+        <thead>
+          <tr>
+            <th>Unit</th>
+            <th>USD</th>
+            <th>NPR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Tola</td><td id="silver-tola-usd">--</td><td id="silver-tola-npr">--</td></tr>
+          <tr><td>Troy Ounce</td><td id="silver-oz-usd">--</td><td id="silver-oz-npr">--</td></tr>
+          <tr><td>Gram</td><td id="silver-g-usd">--</td><td id="silver-g-npr">--</td></tr>
+          <tr><td>Kilogram</td><td id="silver-kg-usd">--</td><td id="silver-kg-npr">--</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <div class="last-updated" id="last-updated">Last updated: --</div>
+  <div class="error-message" id="error-message" style="display:none"></div>
+  <script>
+    const USD_TO_NPR = 130;
+    const OUNCE_TO_GRAM = 31.1035;
+    const GRAM_TO_KG = 1000;
+    const TOLA_TO_GRAM = 11.66;
+    const API_KEY = 'goldapi-16yc1hsmckui6h8-io';
+    const GOLD_URL = 'https://www.goldapi.io/api/XAU/USD';
+    const SILVER_URL = 'https://www.goldapi.io/api/XAG/USD';
+
+    async function fetchMetalPrice(url) {
+      const res = await fetch(url, {
+        headers: {
+          'x-access-token': API_KEY,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!res.ok) throw new Error('API error');
+      return res.json();
+    }
+
+    function formatUSD(val) {
+      return '$ ' + Number(val).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    function formatNPR(val) {
+      return 'रु ' + Number(val).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+
+    function fillTable(prefix, pricePerOunce) {
+      // Troy Ounce
+      document.getElementById(prefix+'-oz-usd').textContent = formatUSD(pricePerOunce);
+      document.getElementById(prefix+'-oz-npr').textContent = formatNPR(pricePerOunce * USD_TO_NPR);
+      // Gram
+      const perGram = pricePerOunce / OUNCE_TO_GRAM;
+      document.getElementById(prefix+'-g-usd').textContent = formatUSD(perGram);
+      document.getElementById(prefix+'-g-npr').textContent = formatNPR(perGram * USD_TO_NPR);
+      // Kilogram
+      const perKg = perGram * GRAM_TO_KG;
+      document.getElementById(prefix+'-kg-usd').textContent = formatUSD(perKg);
+      document.getElementById(prefix+'-kg-npr').textContent = formatNPR(perKg * USD_TO_NPR);
+      // Tola
+      const perTola = perGram * TOLA_TO_GRAM;
+      document.getElementById(prefix+'-tola-usd').textContent = formatUSD(perTola);
+      document.getElementById(prefix+'-tola-npr').textContent = formatNPR(perTola * USD_TO_NPR);
+    }
+
+    async function updatePrices() {
+      const errorDiv = document.getElementById('error-message');
+      errorDiv.style.display = 'none';
+      errorDiv.textContent = '';
+      try {
+        const [gold, silver] = await Promise.all([
+          fetchMetalPrice(GOLD_URL),
+          fetchMetalPrice(SILVER_URL)
+        ]);
+        // GoldAPI returns price in 'price' field (per troy ounce)
+        fillTable('gold', gold.price);
+        fillTable('silver', silver.price);
+        // Last updated
+        const now = new Date();
+        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        document.getElementById('last-updated').textContent = 'Last updated: ' + now.toLocaleString('en-GB', options);
+      } catch (err) {
+        errorDiv.textContent = 'Unable to fetch live prices. Please try again later.';
+        errorDiv.style.display = 'block';
+      }
+    }
+
+    updatePrices();
+    setInterval(updatePrices, 60000);
+  </script>
+</body>
+</html> 
